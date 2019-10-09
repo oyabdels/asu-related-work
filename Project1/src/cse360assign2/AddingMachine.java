@@ -1,13 +1,16 @@
 /**
  * Class that adds and divides numbers.
  * @author Omer Abdelsalam
- * @version 1.0
+ * @version 2.0
  */
 package cse360assign2;
 
+import java.util.*;
 public class AddingMachine {
 
 	private int total;
+	private ArrayList<Integer> flag = new ArrayList<Integer>();
+	private ArrayList<Integer> values = new ArrayList<Integer>();
 	
 	/**
 	 * Constructor for the class. Sets the total to zero.
@@ -21,37 +24,60 @@ public class AddingMachine {
 	 * @return total
 	 */
 	public int getTotal () {
-		return 0;
+		return total;
 	}
 	
 	/**
 	 * This method adds the parameter value to the total variable.
+	 * Addition is remembered by a 1 in the flag arraylist.
 	 * @param value Integer parameter that gets added to the total.
 	 */
-	public void add (int value) {
-		
+	public void add (int value) { // Addition gets flagged by 1
+		this.total = total + value;
+		flag.add(1);
+		values.add(value);
 	}
 	
 	/**
 	 * This method subtracts the parameter value to the total variable.
-	 * @param value Integer paramtere that gets subtracted to the total.
+	 * Subtraction is remembered by a 2 in the flag arraylist.
+	 * @param value Integer parameter that gets subtracted to the total.
 	 */
-	public void subtract (int value) {
-		
+	public void subtract (int value) { // Subtraction gets flagged by 2
+		this.total = total - value;
+		flag.add(2);
+		values.add(value);
 	}
 		
 	/**
-	 * toString method that converts the object into a string.
-	 * @return Returns a string.
+	 * toString method that uses a string builder to make the return string.
+	 * @return Returns a string with the "history" of addition and subtraction.
 	 */
 	public String toString () {
-		return "";
+		String result;
+		StringBuilder str = new StringBuilder();
+		str.append(0);
+		int i = 0;
+		while(i < values.size()) {
+			if(flag.get(i) == 1) {
+				str.append(" + ");
+			} else {
+				str.append(" - ");
+			}
+			str.append(values.get(i));
+			i++;
+		}
+		result = str.toString();
+		return result;
 	}
 
 	/**
 	 * Clears the adding machine object. Sets total to 0.
+	 * Clears the flag arraylist as well as the values arraylist.
 	 */
 	public void clear() {
-	
+		this.total = 0;
+		flag.clear();
+		values.clear();
 	}
 }
